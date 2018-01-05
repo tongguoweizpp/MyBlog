@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}博客首页 ―― 童国伟的个人博客网{% endblock %}</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static 'css/base.css' %}" rel="stylesheet">
+<link href="{% static 'css/about.css' %}" rel="stylesheet">
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+<link href="{% static 'css/media.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style1.css' %}" rel="stylesheet">
+{% block my_css %}{% endblock %}
+{% block my_js %}{% endblock %}
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="ibody">
+  <header>
+  {% block header %}
+    <h1>童先森博客</h1>
+      {% for all_profile in all_profiles %}
+      <h2>{{ all_profile.signature }}</h2>
+      {% endfor %}
+    <div class="logo"><a href="/"></a></div>
+    <nav id="topnav"><a href="{% url 'index' %}" {% if request.path == '/' %}id="topnav_current"{% endif %}>首页</a><a href="{% url 'about_me' %}" {% if request.path|slice:'9' == '/about_me' %}id="topnav_current"{% endif %}>关于我</a><a href="{% url 'python_blog' %}" {% if request.path|slice:'12' == '/python_blog' %}id="topnav_current"{% endif %}>Python博客</a><a href="{% url 'essay' %}" {% if request.path|slice:'6' == '/essay' %}id="topnav_current"{% endif %}>随笔</a><a href="{% url 'message' %}" {% if request.path|slice:'8' == '/message' %}id="topnav_current"{% endif %}>留言板</a></nav>
+  {% endblock %}
+  </header>
+
+{% block content %}
+{% endblock %}
+
+  <aside>
+
+    {% for all_profile in all_profiles %}
+        <div class="avatar"><a href="{% url 'about_me' %}"><span>关于童先森</span></a></div>
+        <div class="topspaceinfo">
+          <h1>全局搜索：
+          </h1>
+            <p>
+                <div class="searchbox" >
+                <div class="selectContainer fl">
+                    <span class="selectOption" id="jsSelectOption" data-value="python_blog">Python博客</span>
+                    <ul class="selectMenu" id="jsSelectMenu">
+                        <li data-value="python_blog">Python博客</li>
+                        <li data-value="essay">随笔</li>
+                    </ul>
+                </div>
+                <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
+                <img class="search_btn fr" id="jsSearchBtn" src="{% static 'images/search_btn.png' %}"/>
+              </div>
+            </p>
+        </div>
+        <div class="about_c">
+          <p>姓名：{{ all_profile.last_name }}{{ all_profile.first_name }}</p>
+          <p>职业：{{ all_profile.occupation }} </p>
+          <p>籍贯：{{ all_profile.native_place }}</p>
+          <p>电话：{{ all_profile.mobile }}</p>
+          <p>邮箱：{{ all_profile.email }}</p>
+        </div>
+    {% endfor %}
+
+
+{% block right %}
+{% endblock %}
+{% block right_2 %}
+    <div class="links">
+      <h2>
+        <p>友情链接</p>
+      </h2>
+      <ul>
+        <li><a href="http://www.tongguoweizpp.com">童国伟个人博客</a></li>
+        <li><a href="https://www.reddit.com/r/Python/">Python • r/Python</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <ul>
+        <p> Design by <a href="{% url 'index' %}">Tongguoweizpp</a></p>
+        <p>WeChat ID is tgw-0213</p>
+      </ul>
+    </div>
+{% endblock %}
+  </aside>
+  <script src="{% static 'js/silder.js' %}"></script>
+  <script src="{% static 'js/deco-common.js' %}"></script>
+  <div class="clear"></div>
+</div>
+</body>
+</html>

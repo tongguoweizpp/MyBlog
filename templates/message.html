@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+</head>
+{% load staticfiles %}
+{% block title %}留言板-童国伟的个人博客网{% endblock %}
+{% block content %}
+<article>
+    <h3 class="about_h">您当前的位置是：<a href="{% url 'index' %}">首页</a>><a href="{% url 'message' %}">留言板</a></h3>
+    <div class="bloglist">
+        {% for all_mesaage in all_messages %}
+          <div class="blogs">
+              <p>{{ all_mesaage.message }}</p>
+              <div class="autor"><span>访客：{{ all_mesaage.name }}</span><span>分类：[<a href="/">留言板</a>]</span><span><span>发表时间： {{ all_mesaage.add_time }}</span></div>
+            <div class="dateview">{{ all_mesaage.add_time }}</div>
+          </div>
+        {% endfor %}
+    </div>
+</article>
+{% endblock %}
+{% block right %}
+
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    </head>
+    <body>
+    <form action="{% url 'savemessage' %}" method="post" class="dark-matter">
+        <h1>留言信息
+            <span>请留下你的信息.</span>
+        </h1>
+        <label>
+            <span>姓名 :</span>
+            <input id="name" type="text" name="name" class="error" placeholder="请输入你的大名！"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>邮箱 :</span>
+            <input id="email" type="email" value="" name="email" placeholder="请输入你的邮箱！"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>地址 :</span>
+            <input id="address" type="text" value="" name="address" placeholder="请输入你的地址！"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>留言 :</span>
+            <textarea id="message" name="message"  placeholder="扯淡、吐槽、鼓励、表扬......想说啥就说啥！"></textarea>
+            <div class="error-msg"></div>
+        </label>
+        <div class="success-msg"></div>
+        <label>
+            <span>&nbsp;</span>
+            <input type="submit" class="button" value="提交"/>
+        </label>
+        {% csrf_token %}
+    </form>
+    </body>
+    </html>
+
+{% endblock %}

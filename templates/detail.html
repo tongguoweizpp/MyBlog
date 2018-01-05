@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+</head>
+{% block title %}博客首页-童国伟的个人博客网{% endblock %}
+
+{% block header %}
+    <h1>童先森博客</h1>
+      {% for all_profile in all_profiles %}
+      <h2>{{ all_profile.signature }}</h2>
+      {% endfor %}
+  {% endblock %}
+
+{% block content %}
+    <article>
+    <div class="bloglist">
+      <h2>
+        <p><a href="/">返回首页</a></p>
+      </h2>
+    </div>
+    <div class="about">
+      <h2>{{ blog.title }}</h2>
+      <ul>
+            <p>
+                {% autoescape off %}
+                {{ blog.content }}
+                {% endautoescape %}
+            </p>
+      </ul>
+    </div>
+    </article>
+{% endblock %}
+
+
+{% block right %}
+
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    </head>
+    <body>
+    <form action="{% url 'savemessage' %}" method="post" class="dark-matter">
+        <h1>文章留言
+            <span>请阁下发表探讨</span>
+        </h1>
+        <label>
+            <span>姓名 :</span>
+            <input id="name" type="text" name="name" class="error" placeholder="请输入你的大名！"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>邮箱 :</span>
+            <input id="email" type="email" value="" name="email" placeholder="请输入你的邮箱！"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>地址 :</span>
+            <input id="address" type="text" value="" name="address" placeholder="请输入你的地址！"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>吐槽 :</span>
+            <textarea id="message" name="message"  placeholder="扯淡、吐槽、鼓励、表扬......想说啥就说啥！"></textarea>
+            <div class="error-msg"></div>
+        </label>
+        <div class="success-msg"></div>
+        <label>
+            <span>&nbsp;</span>
+            <input type="submit" class="button" value="提交"/>
+        </label>
+        {% csrf_token %}
+    </form>
+    </body>
+    </html>
+
+{% endblock %}

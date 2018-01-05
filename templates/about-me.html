@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+</head>
+{% block title %}关于我-童国伟的个人博客网{% endblock %}
+{% block content %}
+<article>
+    <h3 class="about_h">您当前的位置是：<a href="{% url 'index' %}">首页</a>><a href="{% url 'about_me' %}">关于我</a></h3>
+    <div class="about">
+      <h2>Just about me</h2>
+      <ul>
+        {% for aboutme in all_aboutmes %}
+            <p>{{ aboutme.about_me_data }}</p>
+            <p>{{ aboutme.about_me_education }}</p>
+            <p>{{ aboutme.about_me_work }}</p>
+            <p>{{ aboutme.about_me_evaluation }}</p>
+      </ul>
+      <h2>About my blog</h2>
+      <ul class="blog_a">
+        <p>域  名：<a href="http://www.tongguoweizpp.com" class="blog_link" target="_blank">www.tongguoweizpp.com </a>创建于2017年12月12日</p>
+        <p>主  机：<a href="http://http://www.laoxuehost.com/" class="blog_link" target="_blank">老薛主机</a></p>
+        <p>程  序：Python</p>
+        <p>框  架：Django</p>
+        <p>后 台 管 理 系 统：xadmin</p>
+        <p>联 系 邮 箱：{{ aboutme.email }}</p>
+        {% endfor %}
+      </ul>
+    </div>
+</article>
+{% endblock %}
+{% block right %}
+{% endblock %}

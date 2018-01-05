@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+<head>
+    <meta charset="UTF-8">
+</head>
+{% block title %}博客首页-童国伟的个人博客网{% endblock %}
+
+{% block content %}
+    <article>
+        <div class="banner">
+          <ul class="texts">
+            <p>I can make it through the rain. I can stand up once again on my own. </p>
+            <p>我可以穿越云雨，也可以东山再起(Mariah Carey-through the rain)。</p>
+          </ul>
+        </div>
+
+
+    <div class="bloglist">
+      <h2>
+        <p><span>推荐</span>文章</p>
+      </h2>
+    {% for all_wz in all_articles %}
+      <div class="blogs">
+
+        <h3><a href="{% url 'detail' all_wz.id %}">{{ all_wz.title }}</a></h3>
+        <figure><img src="{{ all_wz.image_url }}" ></figure>
+        <ul>
+          <p class="product-buyer-name">
+              {% autoescape off %}
+              {{ all_wz.content }}
+              {% endautoescape %}
+          </p>
+          <a href="{% url 'detail' all_wz.id %}" target="_blank" class="readmore">阅读全文&gt;&gt;</a>
+        </ul>
+        <p class="autor"><span>作者：{{ all_wz.name }}</span><span>分类：【<a href="/">{{ all_wz.get_category_display }}</a>】</span><span>浏览（<a href="/">{{ all_wz.click_nums }}</a>）</span><span>评论（<a href="/">{{ all_wz.comment }}</a>）</span></p>
+        <div class="dateview">{{ all_wz.add_time }}</div>
+      </div>
+    {% endfor %}
+    </div>
+    </article>
+{% endblock %}
+
+
+{% block right %}
+
+    <div class="ph_news">
+      <h2>
+        <p>博客推荐</p>
+      </h2>
+      <ul class="ph_n">
+          {% for all_sorted in all_sorteds %}
+        <li><span {% if forloop.counter <= 3 %}class="num{{ forloop.counter }}{% else %}{% endif %}">{{ forloop.counter }}</span><a href="{% url 'detail' all_sorted.id %}">{{ all_sorted.title }}</a></li>
+          {% endfor %}
+      </ul>
+    </div>
+
+{% endblock %}
+

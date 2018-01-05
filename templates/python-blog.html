@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+<head>
+    <meta charset="UTF-8">
+</head>
+{% block title %}Python博客-童国伟的个人博客网{% endblock %}
+
+{% block content %}
+<article>
+    <h3 class="about_h">您当前的位置是：<a href="{% url 'index' %}">首页</a>><a href="{% url 'python_blog' %}">Python博客</a></h3>
+
+    <div class="bloglist">
+    {% for all_bk in all_bks.object_list %}
+      <div class="blogs">
+          <h3><a href="{% url 'detail' all_bk.id %}">{{ all_bk.title }}</a></h3>
+          <figure><img src="{{ all_bk.image_url }}" ></figure>
+        <ul>
+          <p>
+              {% autoescape off %}
+              {{ all_bk.content }}<a href="{% url 'detail' all_bk.id %}" target="_blank" class="readmore">全文</a>
+              {% endautoescape %}
+          </p>
+        </ul>
+          <div class="autor"><span>作者：{{ all_bk.name }}</span><span>分类：[<a href="/">{{ all_bk.get_category_display }}</a>]</span><span>浏览（<a href="/">{{ all_bk.click_nums }}</a>）</span><span>评论（<a href="/">{{ all_bk.comment }}</a>）</span></div>
+
+        <div class="dateview">{{ all_bk.add_time }}</div>
+      </div>
+    {% endfor %}
+    </div>
+    <div class="pageturn">
+        <ul class="pagelist">
+            {% if all_bks.has_previous %}
+                <li class="long"><a href="?{{ all_bks.previous_page_number.querystring }}">上一页</a></li>
+            {% endif %}
+
+            {% for page in all_bks.pages %}
+                {% if page %}
+                    {% ifequal page all_bks.number %}
+                        <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                    {% endifequal %}
+                {% else %}
+                    <li class="none"><a href="">...</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if all_bks.has_next %}
+                <li class="long"><a href="?{{ all_bks.next_page_number.querystring }}">下一页</a></li>
+            {% endif %}
+
+        </ul>
+    </div>
+</article>
+{% endblock %}
+{% block right %}
+
+    <div class="ph_news">
+
+      <h2>
+        <p>博客推荐</p>
+      </h2>
+      <ul>
+        {% for all_blog in all_blogs %}
+            <li><a href="/">{{ all_blog.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <h2>
+        <p>最新评论</p>
+      </h2>
+      <ul class="pl_n">
+        <dl>
+          <dt><img src="images/s8.jpg"> </dt>
+          <dt> </dt>
+          <dd>DanceSmile
+            <time>49分钟前</time>
+          </dd>
+          <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
+        </dl>
+      </ul>
+      <h2>
+        <p>最近访客</p>
+        <ul>
+          <img src="images/vis.jpg"><!-- 直接使用“多说”插件的调用代码 -->
+        </ul>
+      </h2>
+    </div>
+
+{% endblock %}
+
+{% block right_2 %}
+
+{% endblock %}
